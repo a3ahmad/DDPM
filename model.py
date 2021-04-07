@@ -13,6 +13,12 @@ import numpy as np
 
 from PIL import Image
 
+try:
+    #from deepspeed.ops.adam import FusedAdam as Adam
+    from deepspeed.ops.adam import DeepSpeedCPUAdam as Adam
+except:
+    from torch.optim import Adam
+
 
 class Upsample(nn.Module):
     def __init__(self, factor):
@@ -229,5 +235,5 @@ class DDPM(LightningModule):
         return {}
 
     def configure_optimizers(self):
-        opt = optim.Adam(self.parameters(), lr=self.args.lr)
+        opt = Adam(self.parameters(), lr=self.args.lr)
         return opt

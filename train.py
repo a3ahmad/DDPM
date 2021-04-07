@@ -102,6 +102,8 @@ if __name__ == '__main__':
                 plugins=DeepSpeedPlugin(
                         stage=3,
                         #partition_activations=True,
+                        allgather_bucket_size=5e8,
+                        reduce_bucket_size=5e8,
                         cpu_offload=True))
 
     trainer.fit(model, DataLoader(train, batch_size=args.batch_size, num_workers=8, pin_memory=True, shuffle=True))
